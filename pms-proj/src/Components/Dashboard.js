@@ -95,7 +95,7 @@ const GreetingBox = () => {
 
     return (
         <GreetingContainer>
-            <Typography variant="h5">Hello, User!</Typography>
+            <Typography variant="h5">Hello, Proj Manager!</Typography>
             <Typography variant="body1">{time.toLocaleTimeString()}</Typography>
         </GreetingContainer>
     );
