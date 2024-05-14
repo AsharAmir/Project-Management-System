@@ -1,0 +1,34 @@
+.sidebar {
+    width: 300px;
+    background-color: #2C3E50;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 100px; /* Decreased margin to add more space */
+    text-align: center;
+}
+
+.menu-item {
+    margin-bottom: 25px; /* Increased margin between menu items */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+    text-align: center; /* Center align text */
+    font-family: Candara;
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.menu-item:last-child {
+    margin-bottom: 0; /* Remove margin bottom for the last menu item */
+}
+
+.menu-item:hover {
+    background-color: #34495e; /* Change background color on hover */
+}
