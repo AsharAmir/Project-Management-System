@@ -34,16 +34,28 @@ public class Task {
     @Column(name = "project_id")
     private int projectID;
 
+    @Column(name = "status")
+    private String status;
     public Task() {
+        status = "Pending";
     }
 
-    public Task(String taskName, String description, String priority, Date startDate, Date endDate, Integer projectID) {
+    public Task(String taskName, String description, String priority, Date startDate, Date endDate, Integer projectID, String status) {
         this.taskName = taskName;
         this.description = description;
         this.priority = priority;
         this.startDate = startDate;
         this.endDate = endDate;
         this.projectID = projectID;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getTaskId() {

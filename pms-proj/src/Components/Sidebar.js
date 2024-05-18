@@ -28,8 +28,8 @@ const Sidebar = () => {
 
     const menuItems = [
         { text: 'Dashboard', icon: <DashboardIcon />, path: '/Dashboard'},
-        { text: 'Projects', icon: <AssignmentIcon /> },
-        { text: 'Tasks', icon: <TaskIcon /> },
+        { text: 'Projects', icon: <AssignmentIcon />},
+        { text: 'Tasks', icon: <TaskIcon />, path: '/TaskDetails'},
         { text: 'Reports', icon: <ReportIcon /> },
         { text: 'Settings', icon: <SettingsIcon /> },
         { text: 'Logout', icon: <LogoutIcon /> },

@@ -3,7 +3,13 @@ import { styled } from '@mui/system';
 import { Box, Button, Typography, Select, MenuItem, TextField, Paper } from '@mui/material';
 import Sidebar from './Sidebar';
 import axios from 'axios';
+import {createGlobalStyle} from 'styled-components';
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    overflow: hidden;
+  }
+`;
 const Root = styled('div')({
     display: 'flex',
     background: '#232526',
@@ -49,6 +55,7 @@ const AddTaskToProject = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [error, setError] = useState(null);
+    const [taskStatus, setStatus] = useState('');
 
     useEffect(() => {
         fetchProjects();
@@ -95,11 +102,18 @@ const AddTaskToProject = () => {
             startDate: startDate,
             endDate: endDate,
             projectID: selectedProject,
+            taskStatus: "Pending"
         };
         console.log(taskData);
         try {
             const res = await axios.post('http://localhost:3000/api/tasks/addTask', taskData);
             console.log('Task created', res.data);
+            alert('Task added successfully');
+            setTaskName('');
+            setDescription('');
+            setPriority('low');
+            setStartDate('');
+            setEndDate('');
         } catch (error) {
             console.error(error);
             console.error('Server responded with error:', error.response.status, JSON.stringify(error.response.data));
@@ -112,6 +126,8 @@ const AddTaskToProject = () => {
     }
 
     return (
+        <>
+            <GlobalStyle />
         <Root>
             <Sidebar />
             <Content>
@@ -192,6 +208,7 @@ const AddTaskToProject = () => {
                 </ContentContainer>
             </Content>
         </Root>
+            </>
     );
 };
 

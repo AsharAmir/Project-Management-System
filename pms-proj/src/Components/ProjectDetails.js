@@ -4,12 +4,20 @@ import { Grid, Paper, Typography, Box, Container } from '@mui/material';
 import Sidebar from './Sidebar';
 import axios from 'axios';
 import {useParams} from "react-router-dom";
+import {createGlobalStyle} from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    overflow: hidden;
+  }
+`;
 
 const Root = styled('div')({
     display: 'flex',
     background: '#232526',  // fallback for old browsers
     background: '-webkit-linear-gradient(to left, #414345, #232526)',  // Chrome 10-25, Safari 5.1-6
     background: 'linear-gradient(to left, #414345, #232526)', // W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+
+    overflowY: 'hidden',
 });
 
 const MainContainer = styled(Container)(({ theme }) => ({
@@ -44,13 +52,28 @@ const SectionBox = styled(Box)(({ theme }) => ({
 const GetProjectByID = () => {
     const [project, setProject] = useState(null);
     const [error, setError] = useState(null);
+    const [tasks, setTasks] = useState([]);
     const { projectId } = useParams();
+
+    const fetchTasks = async (projectId) => {
+        try {
+            const response = await axios.get(`http://localhost:3000/api/tasks/GetByProject/${projectId}`);
+            setTasks(response.data);
+            console.log(response.data)
+        } catch (error) {
+            console.error(error);
+            setError('Error fetching tasks');
+        }
+    };
+
 
     useEffect(() => {
         const fetchProject = async () => {
             try {
                 const response = await axios.get(`http://localhost:3000/api/projects/fetchProject/${projectId}`);
+                fetchTasks(projectId);
                 setProject(response.data);
+
             } catch (error) {
                 console.error(error);
                 setError('Error fetching project details');
@@ -68,7 +91,10 @@ const GetProjectByID = () => {
         return <div>Loading...</div>;
     }
 
+
     return (
+        <>
+            <GlobalStyle />
         <Root>
             <Sidebar />
             <MainContainer>
@@ -111,10 +137,10 @@ const GetProjectByID = () => {
                 </SectionBox>
                 <SectionBox>
                     <Typography variant="h6">Tasks</Typography>
-                    {project.tasks && project.tasks.length > 0 ? (
-                        project.tasks.map((task) => (
-                            <Typography key={task.id} variant="body2">
-                                {task.name}: {task.description}
+                    {tasks.length > 0 ? (
+                        tasks.map((task) => (
+                            <Typography key={task.task_id} variant="body2">
+                                {task.taskName}: {task.description}
                             </Typography>
                         ))
                     ) : (
@@ -123,6 +149,7 @@ const GetProjectByID = () => {
                 </SectionBox>
             </MainContainer>
         </Root>
+            </>
     );
 };
 

@@ -4,12 +4,20 @@ import { Grid, Paper, Typography, Button } from '@mui/material';
 import {Navigate, useNavigate} from 'react-router-dom'; // Import Navigate
 import Sidebar from './Sidebar';
 import axios from 'axios';
+import {createGlobalStyle} from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    overflow: hidden;
+  }
+`;
 
 const Root = styled('div')({
     display: 'flex',
     background: '#232526',  // fallback for old browsers
     background: '-webkit-linear-gradient(to left, #414345, #232526)',  // Chrome 10-25, Safari 5.1-6
     background: 'linear-gradient(to left, #414345, #232526)', // W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+
+    overflowY: 'hidden',
 });
 
 const Content = styled('div')({
@@ -95,7 +103,7 @@ const GreetingBox = () => {
 
     return (
         <GreetingContainer>
-            <Typography variant="h5">Hello, Proj Manager!</Typography>
+            <Typography variant="h5">Hello there, Proj Manager!</Typography>
             <Typography variant="body1">{time.toLocaleTimeString()}</Typography>
         </GreetingContainer>
     );
@@ -132,6 +140,8 @@ const Dashboard = () => {
 
 
     return (
+        <>
+        <GlobalStyle />
         <Root>
             <Sidebar />
             <Content>
@@ -164,6 +174,7 @@ const Dashboard = () => {
                 </ContentContainer>
             </Content>
         </Root>
+            </>
     );
 };
 

@@ -12,19 +12,6 @@ public class TaskController {
     @Autowired
     private TaskRepository taskRepository;
 
-//    @PostMapping("/addTask")
-//    public ResponseEntity<String> createTask(@RequestBody Task task) {
-////        taskRepository.save(task);
-////        return ResponseEntity.status(HttpStatus.CREATED).body("Task created successfully");
-//        System.out.println("Received Task Object: " + task.toString());
-//
-//        if (task.getProjectID() == 0) {
-//            System.out.println("Project ID is missing");
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Project ID is missing");
-//        }
-//        taskRepository.save(task);
-//        return ResponseEntity.status(HttpStatus.CREATED).body("Task created successfully");
-//    }
 @PostMapping("/addTask")
 public ResponseEntity<String> createTask(@RequestBody Task task) {
     System.out.println("Received Task Object: " + task.toString());
@@ -34,6 +21,8 @@ public ResponseEntity<String> createTask(@RequestBody Task task) {
         System.out.println("Project ID is missing or invalid");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Project ID is missing or invalid");
     }
+
+
 
     // Check if other required fields are missing or null
     if (task.getTaskName() == null || task.getDescription() == null || task.getPriority() == null ||
@@ -52,5 +41,31 @@ public ResponseEntity<String> createTask(@RequestBody Task task) {
     public ResponseEntity<Iterable<Task>> fetchAllTasks() {
         Iterable<Task> tasks = taskRepository.findAll();
         return ResponseEntity.ok(tasks);
+    }
+
+    @GetMapping("/GetByProject/{id}")
+    public ResponseEntity<Iterable<Task>> fetchTasksByProject(@PathVariable int id) {
+        Iterable<Task> tasks = taskRepository.findByProjectID(id);
+        return ResponseEntity.ok(tasks);
+    }
+
+    @PostMapping("/MarkAsDone/{id}")
+    public ResponseEntity<String> markTaskAsDone(@PathVariable int id) {
+        Task task = taskRepository.findById(id).orElse(null);
+        if (task == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found");
+        }
+        task.setStatus("Done");
+        taskRepository.save(task);
+        return ResponseEntity.ok("Task marked as done");
+    }
+
+    @GetMapping("/GetByTaskID/{id}")
+    public ResponseEntity<Task> fetchTaskByID(@PathVariable int id) {
+        Task task = taskRepository.findById(id).orElse(null);
+        if (task == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(task);
     }
 }
