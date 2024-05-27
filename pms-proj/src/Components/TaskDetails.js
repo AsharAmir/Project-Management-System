@@ -219,6 +219,7 @@ const TaskManager = () => {
                                             color="primary"
                                             style={{ marginTop: '10px', marginLeft: '2px' }}
                                             onClick={() => assignMember(task.taskId)}
+                                            disabled={task.status === 'Done'}
                                         >
                                             Assign Member
                                         </Button>

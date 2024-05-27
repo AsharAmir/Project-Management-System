@@ -38,6 +38,7 @@ public class Task {
     private String status;
     public Task() {
         status = "Pending";
+        System.out.println("Task constructor called");
     }
 
     public Task(String taskName, String description, String priority, Date startDate, Date endDate, Integer projectID, String status) {

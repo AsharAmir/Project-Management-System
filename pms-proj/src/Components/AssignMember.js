@@ -2,7 +2,17 @@ import React, { useState, useEffect } from 'react';
 import {useParams, useNavigate, Navigate} from 'react-router-dom';
 import axios from 'axios';
 import { styled } from '@mui/system';
-import { Container, Typography, FormControl, FormControlLabel, Checkbox, Button, CircularProgress, Box } from '@mui/material';
+import {
+    Container,
+    Typography,
+    FormControl,
+    FormControlLabel,
+    Checkbox,
+    Button,
+    CircularProgress,
+    Box,
+    Alert
+} from '@mui/material';
 import Sidebar from './Sidebar'; // Import your Sidebar component
 import { createGlobalStyle } from 'styled-components';
 
@@ -109,7 +119,7 @@ const AssignMember = () => {
     const fetchMembers = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`http://localhost:3000/api/member/fetchByProject/${projectId}`);
+            const response = await axios.get(`http://localhost:3000/api/member/getUnassignedMembersByProject/${projectId}`);
             setMembers(response.data);
             setLoading(false);
         } catch (error) {
@@ -126,6 +136,7 @@ const AssignMember = () => {
                 : [...prevSelected, memberId]
         );
     };
+
 
     const handleAssign = async () => {
         try {
@@ -149,25 +160,18 @@ const AssignMember = () => {
                     console.log("Response:", response.data);
                     //clear selected members
                     setSelectedMembers([]);
-                    //TODO NAVIGATE HERE SMWHERE
+                    // Redirect to taskDetails
+                    alert('Members assigned successfully');
+                    console.log('Navigating to taskDetails...');
+                    navigate(`/taskDetails`);
                     return response;
                 })
             );
-
-            // Check if all insertions were successful
-            //const isSuccess = responses.every((response) => response.status === 200);
-            // if (isSuccess) {
-            //     navigate(`/task/${taskId}`);
-            // } else {
-            //     throw new Error('Error assigning members');
-            // }
         } catch (error) {
-            console.error(error);
+            console.error("Error assigning members:", error);
             setError('Error assigning members');
         }
     };
-
-
 
 
     return (

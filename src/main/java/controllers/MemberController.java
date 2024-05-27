@@ -40,6 +40,25 @@ public class MemberController {
         return ResponseEntity.ok(member);
     }
 
+//    @GetMapping("/getMembersExcept/{ids}")
+//    public ResponseEntity<Iterable<Member>> getMembersExcept(@PathVariable String ids) {
+//        String[] idArray = ids.split(",");
+//        Iterable<Member> members = memberRepository.findMembersExceptIds(idArray);
+//        return ResponseEntity.ok(members);
+//    }
+
+    @GetMapping("/getUnassignedMembersByProject/{id}")
+    public ResponseEntity<Iterable<Member>> getUnassignedMembersByProject(@PathVariable int id) {
+        Iterable<Member> members = memberRepository.findUnassignedMembersByProject(id);
+        return ResponseEntity.ok(members);
+    }
+
+
+    @GetMapping("/getMembersByProject/{id}")
+    public ResponseEntity<Iterable<Member>> getMembersByProject(@PathVariable int id) {
+        Iterable<Member> members = memberRepository.findByProjectId(id);
+        return ResponseEntity.ok(members);
+    }
 
 
 

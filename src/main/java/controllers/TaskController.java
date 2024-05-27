@@ -68,4 +68,15 @@ public ResponseEntity<String> createTask(@RequestBody Task task) {
         }
         return ResponseEntity.ok(task);
     }
+
+    @PostMapping("/SetTaskStatus/{id}/{status}")
+    public ResponseEntity<String> setTaskStatus(@PathVariable int id, @PathVariable String status) {
+        Task task = taskRepository.findById(id).orElse(null);
+        if (task == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found");
+        }
+        task.setStatus(status);
+        taskRepository.save(task);
+        return ResponseEntity.ok("Task status updated");
+    }
 }

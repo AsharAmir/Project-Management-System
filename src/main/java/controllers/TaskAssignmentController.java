@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 import Models.TaskAssignment;
 import Repositories.TaskAssignmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +22,5 @@ public class TaskAssignmentController {
         taskAssignmentRepository.save(taskAssignment);
         return ResponseEntity.status(HttpStatus.CREATED).body("Member assigned to task successfully");
     }
+
 }
