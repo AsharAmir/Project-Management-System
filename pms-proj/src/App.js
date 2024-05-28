@@ -24,7 +24,7 @@ function App() {
                 <Route path="/ProjectDetails/:projectId" element={<ProjectDetails />} />  // Adding ProjectDetails route
                 <Route path="/TaskDetails" element={<TaskDetails />} />  // Adding TaskDetails route
                 <Route path="/assignMember/:taskId" element={<AssignMember />} />
-                <Route path="/ScrumBoard/:projectId" element={<ScrumBoard />} />
+                <Route path="/ScrumBoard" element={<ScrumBoard />} />
                 <Route path="/SprintPlanning/:projectId" element={<SprintPlanning />} />
             </Routes>
         </Router>

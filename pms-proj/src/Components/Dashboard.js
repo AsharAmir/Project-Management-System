@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/system';
-import { Grid, Paper, Typography, Button } from '@mui/material';
-import {Navigate, useNavigate} from 'react-router-dom'; // Import Navigate
+import { Grid, Typography, Button, Card, CardContent, Divider } from '@mui/material';
+import { Navigate, useNavigate } from 'react-router-dom'; // Import Navigate
 import Sidebar from './Sidebar';
 import axios from 'axios';
-import {createGlobalStyle} from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -25,7 +25,7 @@ const Content = styled('div')({
     padding: '20px',
 });
 
-const ContentContainer = styled(Paper)(({ theme }) => ({
+const ContentContainer = styled(Card)(({ theme }) => ({
     padding: theme.spacing(3),
     backgroundColor: 'rgba(25,28,36,0.66)',
     marginTop: theme.spacing(3),
@@ -39,7 +39,7 @@ const ContentContainer = styled(Paper)(({ theme }) => ({
     },
 }));
 
-const GreetingContainer = styled(Paper)(({ theme }) => ({
+const GreetingContainer = styled(Card)(({ theme }) => ({
     padding: theme.spacing(3),
     backgroundColor: 'rgba(25,28,36,0.66)',
     marginLeft: 'auto', // Align to the right
@@ -56,14 +56,12 @@ const GreetingContainer = styled(Paper)(({ theme }) => ({
     }
 }));
 
-const ProjectCard = styled(Paper)(({ theme }) => ({
+const ProjectCard = styled(Card)(({ theme }) => ({
     padding: theme.spacing(2),
-    textAlign: 'center',
-    border: '1px solid #e0e0e0',
     borderRadius: '10px',
     backgroundColor: 'rgba( 255, 255, 255, 0.3 )',
     boxShadow: '0 8px 32px 0 rgba( 0, 0, 0, 0.18 )',
-    transition: 'background-color 0.3s ease, transform 0.3s ease', // Added transition for background-color and transform
+    transition: 'background-color 0.3s ease, transform 0.3s ease',
     '&:hover': {
         backgroundColor: '#0A2744',
         transform: 'scale(1.009)'
@@ -87,12 +85,11 @@ const AddProjectButton = styled(Button)(({ theme }) => ({
     '&:hover': {
         backgroundColor: '#0A2744',
     },
-    border: '1px solid #095BAD', // Add border
-    color: '#fff', // Text color
+    border: '1px solid #095BAD',
+    color: '#fff',
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
 }));
 
-//TODO CAN MAKE THIS A SEPARATE COMPONENT
 const GreetingBox = () => {
     const [time, setTime] = useState(new Date());
 
@@ -114,7 +111,6 @@ const Dashboard = () => {
     const [redirect, setRedirect] = useState(false);
     const navigate = useNavigate();
 
-
     useEffect(() => {
         axios.get('/api/projects/fetchAll')
             .then((response) => {
@@ -132,49 +128,49 @@ const Dashboard = () => {
     if (redirect) {
         return <Navigate to="/createProject" />;
     }
-    const handleProjectClick = (projectId) => {
-        return navigate(`/ProjectDetails/${projectId}`)
-        // console.log('Project clicked: ', projectId)
-        // console.log(typeof projectId)
-    };
 
+    const handleProjectClick = (projectId) => {
+        navigate(`/ProjectDetails/${projectId}`);
+    };
 
     return (
         <>
-        <GlobalStyle />
-        <Root>
-            <Sidebar />
-            <Content>
-                <GreetingBox />
-                <ContentContainer>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <Typography variant="h4" gutterBottom>
-                                Projects
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Grid container spacing={3}>
-                                {projects.map((project, index) => (
-                                    <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-                                        <ProjectCard onClick={() => handleProjectClick(project.projectId)}>
-                                            <Typography variant="h6">Project: {project.projectName}</Typography>
-                                            <Typography variant="body2">{project.description}</Typography>
-                                        </ProjectCard>
-                                    </Grid>
-                                ))}
+            <GlobalStyle />
+            <Root>
+                <Sidebar />
+                <Content>
+                    <GreetingBox />
+                    <ContentContainer>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <Typography variant="h4" gutterBottom>
+                                    Projects
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Grid container spacing={3}>
+                                    {projects.map((project, index) => (
+                                        <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+                                            <ProjectCard onClick={() => handleProjectClick(project.projectId)}>
+                                                <CardContent>
+                                                    <Typography variant="h6">Project: {project.projectName}</Typography>
+                                                    <Typography variant="body2">{project.description}</Typography>
+                                                </CardContent>
+                                            </ProjectCard>
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <AddProjectButton variant="contained" color="primary" onClick={handleAddProject}>
+                                    Add Project
+                                </AddProjectButton>
                             </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <AddProjectButton variant="contained" color="primary" onClick={handleAddProject}>
-                                Add Project
-                            </AddProjectButton>
-                        </Grid>
-                    </Grid>
-                </ContentContainer>
-            </Content>
-        </Root>
-            </>
+                    </ContentContainer>
+                </Content>
+            </Root>
+        </>
     );
 };
 

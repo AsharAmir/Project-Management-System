@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../LoginPM.css'; // Import the CSS file
+import {useNavigate} from "react-router-dom";
+
+
 
 const LoginPM = () => {
+
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -15,9 +20,11 @@ const LoginPM = () => {
             });
 
             console.log('Login successful:', response.data);
-            // Do something after successful login, like redirecting to a dashboard
+            navigate('/Dashboard');
+
         } catch (error) {
             console.error('Login failed:', error);
+            alert('Login failed')
         }
     };
 

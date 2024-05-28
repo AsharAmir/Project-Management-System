@@ -11,6 +11,7 @@ import TaskIcon from '@mui/icons-material/Task';
 import ReportIcon from '@mui/icons-material/Report';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import SplitscreenIcon from '@mui/icons-material/Splitscreen';
 import {Navigate, useLocation} from 'react-router-dom';
 const Sidebar = () => {
     const [redirect, setRedirect] = useState(null);
@@ -28,11 +29,10 @@ const Sidebar = () => {
 
     const menuItems = [
         { text: 'Dashboard', icon: <DashboardIcon />, path: '/Dashboard'},
-        { text: 'Projects', icon: <AssignmentIcon />},
-        { text: 'Tasks', icon: <TaskIcon />, path: '/TaskDetails'},
-        { text: 'Reports', icon: <ReportIcon /> },
+        { text: 'Task Explorer', icon: <TaskIcon />, path: '/TaskDetails'},
+        { text: 'Scrum', icon: <SplitscreenIcon />, path: '/ScrumBoard'},
         { text: 'Settings', icon: <SettingsIcon /> },
-        { text: 'Logout', icon: <LogoutIcon /> },
+        { text: 'Logout', icon: <LogoutIcon /> , path: '/LoginPM'},
     ];
 
     return (

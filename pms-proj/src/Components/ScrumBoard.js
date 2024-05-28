@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { styled } from '@mui/system';
-import { Container, Box, Typography } from '@mui/material';
+import {Container, Box, Typography, FormControl, Select, MenuItem} from '@mui/material';
 import Sidebar from './Sidebar';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import SprintPlanning from "./SprintPlanning";
 
 const Root = styled('div')({
     display: 'flex',
@@ -42,41 +43,64 @@ const TaskCard = styled(Box)(({ theme }) => ({
 }));
 
 const ScrumBoard = () => {
-    const { projectId } = useParams();
+    const [projects, setProjects] = useState([]);
+    const [selectedProject, setSelectedProject] = useState('');
     const [tasks, setTasks] = useState([]);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [columns, setColumns] = useState({});
 
     useEffect(() => {
-        const fetchTasks = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3000/api/tasks/GetByProject/${projectId}`);
-                const fetchedTasks = response.data;
+        fetchProjects();
+    }, []);
 
-                const columnsFromBackend = {
-                    'To Do': {
-                        name: 'To Do',
-                        items: fetchedTasks.filter(task => task.status === 'To Do')
-                    },
-                    'Pending': {
-                        name: 'Pending',
-                        items: fetchedTasks.filter(task => task.status === 'Pending')
-                    },
-                    'Done': {
-                        name: 'Done',
-                        items: fetchedTasks.filter(task => task.status === 'Done')
-                    }
-                };
+    const fetchProjects = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get('http://localhost:3000/api/projects/fetchAll');
+            setProjects(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError('Error fetching projects');
+            setLoading(false);
+        }
+    };
 
-                setColumns(columnsFromBackend);
-                setTasks(fetchedTasks);
-            } catch (error) {
-                setError('Error fetching tasks');
-            }
-        };
+    useEffect(() => {
+        if (selectedProject) {
+            fetchTasks(selectedProject);
+        }
+    }, [selectedProject]);
 
-        fetchTasks();
-    }, [projectId]);
+    const fetchTasks = async (projectId) => {
+        try {
+            setLoading(true);
+            const response = await axios.get(`http://localhost:3000/api/tasks/GetByProject/${selectedProject}`);
+            const fetchedTasks = response.data;
+
+            const columnsFromBackend = {
+                'To Do': {
+                    name: 'To Do',
+                    items: fetchedTasks.filter(task => task.status === 'To Do')
+                },
+                'Pending': {
+                    name: 'Pending',
+                    items: fetchedTasks.filter(task => task.status === 'Pending')
+                },
+                'Done': {
+                    name: 'Done',
+                    items: fetchedTasks.filter(task => task.status === 'Done')
+                }
+            };
+
+            setColumns(columnsFromBackend);
+            setTasks(fetchedTasks);
+            setLoading(false);
+        } catch (error) {
+            setError('Error fetching tasks');
+            setLoading(false);
+        }
+    };
 
     const updateTaskStatus = async (taskId, status) => {
         try {
@@ -130,6 +154,7 @@ const ScrumBoard = () => {
         }
     };
 
+
     if (error) {
         return <div>Error: {error}</div>;
     }
@@ -141,6 +166,23 @@ const ScrumBoard = () => {
                 <Typography variant="h4" gutterBottom style={{ color: '#fff' }}>
                     Scrum Board
                 </Typography>
+                <FormControl fullWidth variant="outlined" style={{ marginBottom: '20px' }}>
+                    <Select
+                        value={selectedProject}
+                        onChange={(e) => setSelectedProject(e.target.value)}
+                        displayEmpty
+                        style={{ color: '#fff', backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                    >
+                        <MenuItem value="" disabled>
+                            Select Project
+                        </MenuItem>
+                        {projects.map((project) => (
+                            <MenuItem key={project.projectId} value={project.projectId}>
+                                {project.projectName}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Box display="flex">
                         {Object.entries(columns).map(([columnId, column]) => (
@@ -163,9 +205,6 @@ const ScrumBoard = () => {
                                                             {...provided.dragHandleProps}
                                                             style={{
                                                                 ...provided.draggableProps.style,
-                                                                boxShadow: snapshot.isDragging
-                                                                    ? "0 5px 10px rgba(0,0,0,0.2)"
-                                                                    : "none"
                                                             }}
                                                         >
                                                             <Typography variant="body1">{item.taskName}</Typography>
@@ -181,9 +220,12 @@ const ScrumBoard = () => {
                         ))}
                     </Box>
                 </DragDropContext>
+                {selectedProject && <SprintPlanning projectId={selectedProject} />}
             </MainContainer>
+
         </Root>
     );
 };
 
 export default ScrumBoard;
+

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { styled } from '@mui/system';
 import { Container, Box, Typography, TextField, Button, Checkbox, FormControlLabel, LinearProgress } from '@mui/material';
@@ -8,9 +8,9 @@ import {Navigate, useNavigate} from 'react-router-dom'; // Import Navigate
 
 const Root = styled('div')({
     display: 'flex',
-    background: '#232526',
-    background: '-webkit-linear-gradient(to left, #414345, #232526)',
-    background: 'linear-gradient(to left, #414345, #232526)',
+    // background: '#232526',
+    // background: '-webkit-linear-gradient(to left, #414345, #232526)',
+    // background: 'linear-gradient(to left, #414345, #232526)',
 });
 
 const MainContainer = styled(Container)(({ theme }) => ({
@@ -26,13 +26,14 @@ const MainContainer = styled(Container)(({ theme }) => ({
 
 const TaskList = styled(Box)(({ theme }) => ({
     maxHeight: '300px',
-    overflowY: 'scroll',
+    overflowY: 'auto',
     marginBottom: theme.spacing(2),
 }));
 
 const SprintPlanning = () => {
 
-    const { projectId } = useParams();
+    const [projectId, setProjectId] = useState(1);
+    console.log('projectId:', projectId);
     const [tasks, setTasks] = useState([]);
     const [selectedTasks, setSelectedTasks] = useState([]);
     const [sprintName, setSprintName] = useState('');
@@ -117,7 +118,6 @@ const SprintPlanning = () => {
 
     return (
         <Root>
-            <Sidebar />
             <MainContainer>
                 <Typography variant="h4" gutterBottom style={{ color: '#fff' }}>
                     Sprint Planning
@@ -175,7 +175,7 @@ const SprintPlanning = () => {
                                 />
                             }
                             label={task.taskName}
-                            style={{ color: '#fff' }}
+                            style={{ color: '#fff'  }}
                         />
                     ))}
                 </TaskList>
