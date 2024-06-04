@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { styled } from '@mui/system';
 import { Container, Box, Typography, TextField, Button, Checkbox, FormControlLabel, LinearProgress } from '@mui/material';
-import Sidebar from './Sidebar';
-import {Navigate, useNavigate} from 'react-router-dom'; // Import Navigate
+import { useNavigate } from 'react-router-dom';
 
 const Root = styled('div')({
     display: 'flex',
-    // background: '#232526',
-    // background: '-webkit-linear-gradient(to left, #414345, #232526)',
-    // background: 'linear-gradient(to left, #414345, #232526)',
 });
 
 const MainContainer = styled(Container)(({ theme }) => ({
@@ -30,10 +25,8 @@ const TaskList = styled(Box)(({ theme }) => ({
     marginBottom: theme.spacing(2),
 }));
 
-const SprintPlanning = () => {
+const SprintPlanning = ({ projectId }) => {
 
-    const [projectId, setProjectId] = useState(1);
-    console.log('projectId:', projectId);
     const [tasks, setTasks] = useState([]);
     const [selectedTasks, setSelectedTasks] = useState([]);
     const [sprintName, setSprintName] = useState('');
@@ -101,9 +94,7 @@ const SprintPlanning = () => {
             });
 
             const sprintId = response.data;
-            console.log('sprintId:', sprintId);
-            console.log('selectedTasks:', selectedTasks);
-            await axios.post(`http://localhost:3000/api/sprints/addTasksToSprint/${sprintId}`, selectedTasks);
+            await axios.post(`http://localhost:3000/api/sprints/addTasksToSprint/${sprintId}`, { taskIds: selectedTasks });
 
             alert('Sprint created and tasks added successfully!');
             navigate('/Dashboard');

@@ -13,10 +13,11 @@ import jakarta.persistence.*;
 @Table(name = "sprint_tasks")
 public class SprintTasks {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sprintId;
 
+    @Id
     @Column(name = "task_id", nullable = false)
     private int task_id;
 
