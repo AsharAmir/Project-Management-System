@@ -5,12 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import Factories.ConcreteTaskFactory;
 
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private ConcreteTaskFactory taskFactory;
 
 @PostMapping("/addTask")
 public ResponseEntity<String> createTask(@RequestBody Task task) {
@@ -22,8 +26,6 @@ public ResponseEntity<String> createTask(@RequestBody Task task) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Project ID is missing or invalid");
     }
 
-
-
     // Check if other required fields are missing or null
     if (task.getTaskName() == null || task.getDescription() == null || task.getPriority() == null ||
             task.getStartDate() == null || task.getEndDate() == null) {
@@ -31,8 +33,17 @@ public ResponseEntity<String> createTask(@RequestBody Task task) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("One or more required fields are missing or null");
     }
 
+    Task t = taskFactory.createTask(
+            task.getTaskName(),
+            task.getDescription(),
+            task.getPriority(),
+            task.getStartDate(),
+            task.getEndDate(),
+            task.getProjectID()
+    );
+
     // Save the task
-    taskRepository.save(task);
+    taskRepository.save(t);
     return ResponseEntity.status(HttpStatus.CREATED).body("Task created successfully");
 }
 
