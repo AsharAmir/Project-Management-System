@@ -42,4 +42,14 @@ public class SprintTaskController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding tasks to sprint");
         }
     }
+
+    @GetMapping("/getAllTasksInSprint")
+    public ResponseEntity<List<SprintTasks>> getAllTasksInSprint() {
+        try {
+            List<SprintTasks> sprintTasks = sprintTaskRepository.findAll();
+            return ResponseEntity.status(HttpStatus.OK).body(sprintTasks);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 }

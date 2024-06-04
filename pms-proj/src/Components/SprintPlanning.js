@@ -40,8 +40,16 @@ const SprintPlanning = ({ projectId }) => {
         const fetchTasks = async () => {
             try {
                 const response = await axios.get(`http://localhost:3000/api/tasks/GetByProject/${projectId}`);
-                setTasks(response.data);
+                console.log('All tasks for project:', response.data);
+                const scrumTasksResponse = await axios.get('http://localhost:3000/api/sprints/getAllTasksInSprint');
+                console.log('All tasks in sprints:', scrumTasksResponse.data);
+                const scrumTasks = scrumTasksResponse.data.map(sprintTask => sprintTask.task_id);
+                console.log('Scrum task IDs:', scrumTasks);
+                const filteredTasks = response.data.filter(task => !scrumTasks.includes(task.taskId));
+                console.log('Filtered tasks:', filteredTasks);
+                setTasks(filteredTasks);
             } catch (error) {
+                console.error('Error fetching tasks:', error);
                 setError('Error fetching tasks');
             }
         };
