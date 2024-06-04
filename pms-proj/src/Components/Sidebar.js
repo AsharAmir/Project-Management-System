@@ -12,6 +12,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SplitscreenIcon from '@mui/icons-material/Splitscreen';
+import BallotIcon from '@mui/icons-material/Ballot';
 import {Navigate, useLocation} from 'react-router-dom';
 const Sidebar = () => {
     const [redirect, setRedirect] = useState(null);
@@ -31,7 +32,7 @@ const Sidebar = () => {
         { text: 'Dashboard', icon: <DashboardIcon />, path: '/Dashboard'},
         { text: 'Task Explorer', icon: <TaskIcon />, path: '/TaskDetails'},
         { text: 'Scrum', icon: <SplitscreenIcon />, path: '/ScrumBoard'},
-        { text: 'Settings', icon: <SettingsIcon /> },
+        { text: 'Sprints', icon: <BallotIcon />, path: '/SprintsDisplay'},
         { text: 'Logout', icon: <LogoutIcon /> , path: '/LoginPM'},
     ];
 
@@ -43,11 +44,13 @@ const Sidebar = () => {
                 color: '#fff',
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100vh',
+                minHeight: '100vh', // Set min-height to fill the screen
                 paddingLeft: '2vh',
                 paddingRight: '2vh',
                 paddingTop: '5vh',
                 paddingBottom: '5vh',
+                position: 'sticky', // Sticky position to remain visible when scrolling
+                top: 0, // Stick to the top
             }}
         >
             <div

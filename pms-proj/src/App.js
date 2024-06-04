@@ -10,6 +10,7 @@ import TaskDetails from './Components/TaskDetails';
 import AssignMember from './Components/AssignMember';
 import ScrumBoard from "./Components/ScrumBoard";
 import SprintPlanning from "./Components/SprintPlanning";
+import SprintsDisplay from "./Components/SprintsDisplay";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/AssignMember/:taskId" element={<AssignMember />} />
                 <Route path="/ScrumBoard" element={<ScrumBoard />} />
                 <Route path="/SprintPlanning/:projectId" element={<SprintPlanning />} />
+                <Route path="/SprintsDisplay" element={<SprintsDisplay />} />
             </Routes>
         </Router>
     );

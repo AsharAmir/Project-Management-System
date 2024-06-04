@@ -21,6 +21,7 @@ public class SprintTasks {
     @Column(name = "task_id", nullable = false)
     private int task_id;
 
+
     public SprintTasks() {
     }
 
