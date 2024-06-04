@@ -202,6 +202,7 @@ const TaskManager = () => {
                                                     End Date: {new Date(task.endDate).toLocaleDateString()}
                                                 </Typography>
                                             </Grid>
+
                                         </Grid>
                                         <Typography variant="body1">Priority: {task.priority}</Typography>
                                         <Typography variant="body1">Status: {task.status}</Typography>

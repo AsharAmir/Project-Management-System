@@ -60,6 +60,12 @@ public class MemberController {
         return ResponseEntity.ok(members);
     }
 
+    @GetMapping("/getMembersByTask/{id}")
+    public ResponseEntity<Iterable<Member>> getMembersByTask(@PathVariable int id) {
+        Iterable<Member> members = memberRepository.findByTaskId(id);
+        return ResponseEntity.ok(members);
+    }
+
 
 
 

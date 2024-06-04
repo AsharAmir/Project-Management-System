@@ -14,4 +14,8 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     @Query("SELECT m FROM Member m LEFT JOIN TaskAssignment ta ON m.memberId = ta.memberId " +
             "WHERE m.projectId = :projectId AND ta.taskId IS NULL")
     List<Member> findUnassignedMembersByProject(@Param("projectId") Integer projectId);
+
+    @Query("SELECT m FROM Member m JOIN TaskAssignment ta ON m.memberId = ta.memberId WHERE ta.taskId = :taskId")
+    List<Member> findByTaskId(@Param("taskId") Integer taskId);
+
 }
