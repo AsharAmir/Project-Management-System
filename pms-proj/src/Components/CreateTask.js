@@ -10,13 +10,14 @@ const GlobalStyle = createGlobalStyle`
     overflow: hidden;
   }
 `;
-const Root = styled('div')({
-    display: 'flex',
-    background: '#232526',
-    background: '-webkit-linear-gradient(to right, #232526, #414345)',
-    background: 'linear-gradient(to left, #232526, #414345)',
-    height: '100vh',
-});
+
+const Root = styled('div')`
+    display: flex;
+    background: #232526;
+    background: -webkit-linear-gradient(to right, #232526, #414345);
+    background: linear-gradient(to left, #232526, #414345);
+    height: 100vh;
+`;
 
 const Content = styled('div')({
     flexGrow: 1,

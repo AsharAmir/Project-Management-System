@@ -23,12 +23,12 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 
-const Root = styled('div')({
-    display: 'flex',
-    background: '#232526',
-    background: '-webkit-linear-gradient(to left, #414345, #232526)',
-    background: 'linear-gradient(to left, #414345, #232526)',
-});
+const Root = styled('div')`
+    display: flex;
+    background: #232526;
+    background: -webkit-linear-gradient(to left, #414345, #232526);
+    background: linear-gradient(to left, #414345, #232526);
+`;
 
 const MainContainer = styled(Container)(({ theme }) => ({
     marginTop: theme.spacing(5),
