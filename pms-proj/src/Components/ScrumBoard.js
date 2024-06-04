@@ -6,6 +6,22 @@ import {Container, Box, Typography, FormControl, Select, MenuItem} from '@mui/ma
 import Sidebar from './Sidebar';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import SprintPlanning from "./SprintPlanning";
+import {createGlobalStyle} from "styled-components";
+
+
+const GlobalStyle = createGlobalStyle`
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    body {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+`;
+
 
 const Root = styled('div')({
     display: 'flex',
@@ -160,6 +176,8 @@ const ScrumBoard = () => {
     }
 
     return (
+        <>
+            <GlobalStyle />
         <Root>
             <Sidebar />
             <MainContainer>
@@ -224,6 +242,7 @@ const ScrumBoard = () => {
             </MainContainer>
 
         </Root>
+            </>
     );
 };
 
