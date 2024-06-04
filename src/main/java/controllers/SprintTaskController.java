@@ -32,8 +32,10 @@ public class SprintTaskController {
                 throw new RuntimeException("Sprint with id " + sprintId + " does not exist");
             }
             for (Integer taskId : taskIds) {
+                System.out.println("Adding task with ID: " + taskId); // log before saving
                 SprintTasks sprintTask = new SprintTasks(sprintId, taskId);
                 sprintTaskRepository.save(sprintTask);
+                System.out.println("Added task with ID: " + taskId); // log after saving
             }
             return ResponseEntity.status(HttpStatus.CREATED).body("Tasks added to sprint successfully");
         } catch (Exception e) {

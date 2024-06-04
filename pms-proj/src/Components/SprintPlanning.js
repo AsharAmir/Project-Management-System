@@ -94,6 +94,8 @@ const SprintPlanning = ({ projectId }) => {
             });
 
             const sprintId = response.data;
+            console.log('sprintId:', sprintId)
+            console.log('selectedTasks:', selectedTasks);
             await axios.post(`http://localhost:3000/api/sprints/addTasksToSprint/${sprintId}`, { taskIds: selectedTasks });
 
             alert('Sprint created and tasks added successfully!');
