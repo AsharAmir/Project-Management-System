@@ -9,10 +9,14 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import TaskIcon from '@mui/icons-material/Task';
 import ReportIcon from '@mui/icons-material/Report';
+import FolderIcon from '@mui/icons-material/Folder';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SplitscreenIcon from '@mui/icons-material/Splitscreen';
 import BallotIcon from '@mui/icons-material/Ballot';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import GroupsIcon from '@mui/icons-material/Groups';
+
 import {Navigate, useLocation} from 'react-router-dom';
 const Sidebar = () => {
     const [redirect, setRedirect] = useState(null);
@@ -33,7 +37,11 @@ const Sidebar = () => {
         { text: 'Task Explorer', icon: <TaskIcon />, path: '/TaskDetails'},
         { text: 'Scrum', icon: <SplitscreenIcon />, path: '/ScrumBoard'},
         { text: 'Sprints', icon: <BallotIcon />, path: '/SprintsDisplay'},
+        {text : 'Calender', icon: <EventAvailableIcon />, path: '/Createcalender'},
+        { text: 'Meetings', icon: <GroupsIcon />, path: '/Schedulemeeting'},
+        { text: 'Documents', icon: <FolderIcon />, path: '/Sharedoc'},
         { text: 'Logout', icon: <LogoutIcon /> , path: '/LoginPM'},
+
     ];
 
     return (

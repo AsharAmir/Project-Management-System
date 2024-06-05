@@ -11,6 +11,14 @@ import AssignMember from './Components/AssignMember';
 import ScrumBoard from "./Components/ScrumBoard";
 import SprintPlanning from "./Components/SprintPlanning";
 import SprintsDisplay from "./Components/SprintsDisplay";
+import Createcalender from "./Components/W_Components/Createcalender";
+import Createmeeting from "./Components/W_Components/Createmeeting";
+import Schedulemeeting from "./Components/W_Components/Schedulemeeting";
+import Selectmembers_docsharing from "./Components/W_Components/Selectmembers_docsharing";
+import selectmembers_reminders from "./Components/W_Components/Selectmembers_reminders";
+import setreminder from "./Components/W_Components/Setreminder";
+import Sharedoc from "./Components/W_Components/Sharedoc";
+import Sharemeeting from "./Components/W_Components/Sharemeeting";
 
 function App() {
     return (
@@ -28,6 +36,14 @@ function App() {
                 <Route path="/ScrumBoard" element={<ScrumBoard />} />
                 <Route path="/SprintPlanning/:projectId" element={<SprintPlanning />} />
                 <Route path="/SprintsDisplay" element={<SprintsDisplay />} />
+                <Route path="/Createcalender" element={<Createcalender />} />
+                <Route path="/Createmeeting" element={<Createmeeting />} />
+                <Route path="/Schedulemeeting" element={<Schedulemeeting />} />
+                <Route path="/Selectmembers_docsharing" element={<Selectmembers_docsharing />} />
+                <Route path="/selectmembers_reminders" element={<selectmembers_reminders />} />
+                <Route path="/setreminder" element={<setreminder />} />
+                <Route path="/Sharedoc" element={<Sharedoc />} />
+                <Route path="/Sharemeeting" element={<Sharemeeting />} />
             </Routes>
         </Router>
     );
