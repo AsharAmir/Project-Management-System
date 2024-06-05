@@ -45,6 +45,19 @@ public class Sprint {
 //    private List<Task> tasks;
 
     // Getters and setters
+
+    Sprint() {
+    }
+
+
+    public Sprint(String sprintName, Date startDate, Date endDate, int projectID) {
+        this.sprintName = sprintName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.projectId = projectID;
+    }
+
+
     public int getSprintId() {
         return sprintId;
     }

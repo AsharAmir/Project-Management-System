@@ -117,7 +117,12 @@ const TaskManager = () => {
             if (response.status !== 200) {
                 throw new Error(`Error fetching tasks: ${response.statusText}`);
             }
-            setTasks(response.data);
+            let tasks = response.data;
+            tasks.sort((a, b) => {
+                const priorityOrder = ['high', 'normal', 'low'];
+                return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
+            });
+            setTasks(tasks);
             setLoading(false);
         } catch (error) {
             console.error(error);

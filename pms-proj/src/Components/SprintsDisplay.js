@@ -92,6 +92,18 @@ const AddSprintButton = styled(Button)(({ theme }) => ({
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
 }));
 
+const DeleteButton = styled(Button)(({ theme }) => ({
+    marginTop: theme.spacing(2),
+    borderRadius: '5px',
+    marginBottom: '10px',
+    '&:hover': {
+        backgroundColor: '#B22222',
+    },
+    border: '1px solid #B22222',
+    color: '#fff',
+    backgroundColor: 'rgba(211,60,60,0.93)',
+}));
+
 const SprintsDisplay = () => {
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState('');
@@ -108,6 +120,16 @@ const SprintsDisplay = () => {
             fetchSprints(selectedProject);
         }
     }, [selectedProject]);
+
+
+    const deleteSprint = async (sprintId) => {
+        try {
+            await axios.delete(`http://localhost:3000/api/sprints/deleteSprint/${sprintId}`);
+            setSprints(sprints.filter(sprint => sprint.sprintId !== sprintId));
+        } catch (error) {
+            setError('Error deleting sprint');
+        }
+    };
 
     const fetchProjects = async () => {
         try {
@@ -208,6 +230,9 @@ const SprintsDisplay = () => {
                                                         </Typography>
                                                     )}
                                                 </CardContent>
+                                                <DeleteButton onClick={() => deleteSprint(sprint.sprintId)}>
+                                                    Delete Sprint
+                                                </DeleteButton>
                                             </SprintCard>
                                         </Grid>
                                     ))}

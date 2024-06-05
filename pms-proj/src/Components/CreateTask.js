@@ -22,17 +22,19 @@ const Root = styled('div')`
 const Content = styled('div')({
     flexGrow: 1,
     padding: '20px',
+    color: '#fff',
 });
 
 const ContentContainer = styled(Paper)(({ theme }) => ({
+    marginTop: theme.spacing(5),
     padding: theme.spacing(3),
-    backgroundColor: 'rgba( 255, 255, 255, 0.45 )', // Slightly transparent white
-    marginTop: theme.spacing(3),
+    backgroundColor: 'rgba(25,28,36,0.66)',
     backgroundImage: 'linear-gradient(to bottom right, rgba(255,255,255,0.2), rgba(255,255,255,0))',
-    backdropFilter: 'blur(5px)', // Increased blur for better glass effect
-    boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )', // Updated shadow for better glass effect
+    backdropFilter: 'blur(15px)',
+    boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
     borderRadius: '10px',
-    border: '1px solid rgba( 255, 255, 255, 0.18 )',
+    border: '1px solid rgba(255, 255, 255, 0.18)',
+    color: '#fff',
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({

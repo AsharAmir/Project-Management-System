@@ -1,4 +1,5 @@
 package controllers;
+import Factories.SprintFactory;
 import Repositories.SprintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +20,27 @@ public class SprintController {
     @Autowired
     private SprintRepository sprintRepository;
 
+    @Autowired
+    private SprintFactory sprintFactory;
+
     @PostMapping("/createSprint")
     public ResponseEntity<Integer> createSprint(@RequestBody Sprint sprint) {
         try {
-            Sprint savedSprint = sprintRepository.save(sprint);
+            Sprint newSprint = sprintFactory.createSprint(sprint.getSprintName(), sprint.getStartDate(), sprint.getEndDate(), sprint.getProjectId());
+            Sprint savedSprint = sprintRepository.save(newSprint);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedSprint.getSprintId());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @DeleteMapping("/deleteSprint/{sprintId}")
+    public ResponseEntity<String> deleteSprint(@PathVariable int sprintId) {
+        try {
+            sprintRepository.deleteById(sprintId);
+            return ResponseEntity.status(HttpStatus.OK).body("Sprint deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting sprint");
         }
     }
 
