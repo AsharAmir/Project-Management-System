@@ -47,6 +47,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
     border: '1px solid #095BAD',
     color: '#fff',
     backgroundColor: 'rgba(82,211,177,0.07)',
+    width: '100%',
 }));
 
 const StyledSelect = styled(Select)({

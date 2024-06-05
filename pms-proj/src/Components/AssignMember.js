@@ -29,14 +29,13 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-const Root = styled('div')({
-    display: 'flex',
-    background: '#232526',
-    background: '-webkit-linear-gradient(to left, #414345, #232526)',
-    background: 'linear-gradient(to left, #414345, #232526)',
-    overflowY: 'auto',
-    height: '100vh',  // Ensure it takes full height for scrolling
-});
+const Root = styled('div')`
+    display: flex;
+    background: #232526;  // fallback for old browsers
+    background: -webkit-linear-gradient(to left, #414345, #232526);  // Chrome 10-25, Safari 5.1-6
+    background: linear-gradient(to left, #414345, #232526); // W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+
+    overflow-y: hidden;
+`;
 
 const MainContainer = styled(Container)(({ theme }) => ({
     marginTop: theme.spacing(5),
@@ -203,7 +202,7 @@ const AssignMember = () => {
                                     />
                                 ))}
                             </FormControl>
-                            <Button variant="contained" color="primary" onClick={handleAssign} style={{ marginTop: '20px' }}>
+                            <Button variant="contained" color="primary" onClick={handleAssign} style={{ marginTop: '250px', marginLeft: '-100px' }}>
                                 Assign Members
                             </Button>
                         </>

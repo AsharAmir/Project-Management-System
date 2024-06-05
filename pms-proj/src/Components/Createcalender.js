@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { styled } from '@mui/system';
 import { Container, Typography, TextField, Button, CircularProgress, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import Sidebar from '../Sidebar';
+import Sidebar from './Sidebar';
 import { createGlobalStyle } from 'styled-components';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
@@ -24,15 +24,13 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-const Root = styled('div')({
-    display: 'flex',
-    background: '#232526',
-    background: '-webkit-linear-gradient(to left, #414345, #232526)',
-    background: 'linear-gradient(to left, #414345, #232526)',
-    overflowY: 'auto',
-    height: '100vh', 
-});
-
+const Root = styled('div')`
+    display: flex;
+    background: #232526;  // fallback for old browsers
+    background: -webkit-linear-gradient(to left, #414345, #232526);  // Chrome 10-25, Safari 5.1-6
+    background: linear-gradient(to left, #414345, #232526); // W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+
+    overflow-y: hidden;
+`;
 const MainContainer = styled(Container)(({ theme }) => ({
     marginTop: theme.spacing(5),
     padding: theme.spacing(3),

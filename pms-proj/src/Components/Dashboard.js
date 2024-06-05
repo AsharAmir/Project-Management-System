@@ -88,8 +88,8 @@ const AddProjectButton = styled(Button)(({ theme }) => ({
     border: '1px solid #095BAD',
     color: '#fff',
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    width: '100%',
 }));
-
 const GreetingBox = () => {
     const [time, setTime] = useState(new Date());
 

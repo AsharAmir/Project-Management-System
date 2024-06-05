@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { styled } from '@mui/system';
 import { Container, Typography, TextField, Button, CircularProgress, Box } from '@mui/material';
-import Sidebar from '../Sidebar';
+import Sidebar from './Sidebar';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -19,14 +19,14 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-const Root = styled('div')({
-    display: 'flex',
-    background: '#232526',
-    background: '-webkit-linear-gradient(to left, #414345, #232526)',
-    background: 'linear-gradient(to left, #414345, #232526)',
-    overflowY: 'auto',
-    height: '100vh',  // Ensure it takes full height for scrolling
-});
+const Root = styled('div')`
+    display: flex;
+    background: #232526;  // fallback for old browsers
+    background: -webkit-linear-gradient(to left, #414345, #232526);  // Chrome 10-25, Safari 5.1-6
+    background: linear-gradient(to left, #414345, #232526); // W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+
+    overflow-y: auto;
+    height: 100vh;  // Ensure it takes full height for scrolling
+`;
 
 const MainContainer = styled(Container)(({ theme }) => ({
     marginTop: theme.spacing(5),
@@ -71,37 +71,32 @@ const SectionBox = styled(Box)(({ theme }) => ({
     },
 }));
 
-const Sharedoc = () => {
-    const [documentTitle, setDocumentTitle] = useState('');
-    const [documentDescription, setDocumentDescription] = useState('');
-    const [documentFile, setDocumentFile] = useState(null);
+const Schedulemeeting = () => {
+    const [meetingTitle, setMeetingTitle] = useState('');
+    const [meetingDescription, setMeetingDescription] = useState('');
+    const [projectId, setProjectId] = useState('');
+    const [meetingDate, setMeetingDate] = useState('');
+    const [meetingTime, setMeetingTime] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    const handleFileChange = (e) => {
-        setDocumentFile(e.target.files[0]);
-    };
-
-    const handleShare = async () => {
+    const handleSchedule = async () => {
         try {
             setLoading(true);
-            const formData = new FormData();
-            formData.append('title', documentTitle);
-            formData.append('description', documentDescription);
-            formData.append('file', documentFile);
-
-            const response = await axios.post('http://localhost:3000/api/documents/share', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+            const response = await axios.post('http://localhost:3000/api/meetings/schedule', {
+                title: meetingTitle,
+                description: meetingDescription,
+                projectId,
+                date: meetingDate,
+                time: meetingTime,
             });
             console.log('Response:', response.data);
             setLoading(false);
-            navigate(`/documents/${response.data.documentId}`);
+            navigate(`/meetings/${response.data.meetingId}`);
         } catch (error) {
             console.error(error);
-            setError('Error sharing document');
+            setError('Error scheduling meeting');
             setLoading(false);
         }
     };
@@ -113,7 +108,7 @@ const Sharedoc = () => {
                 <Sidebar />
                 <MainContainer>
                     <Typography variant="h4" gutterBottom style={{ color: '#fff' }}>
-                        Share a Document
+                        Schedule a New Meeting
                     </Typography>
                     {loading ? (
                         <CircularProgress style={{ color: '#fff' }} />
@@ -121,12 +116,12 @@ const Sharedoc = () => {
                         <>
                             {error && <Typography variant="body2" style={{ color: 'red' }}>{error}</Typography>}
                             <TextField
-                                label="Document Title"
+                                label="Meeting Title"
                                 variant="outlined"
                                 fullWidth
                                 margin="normal"
-                                value={documentTitle}
-                                onChange={(e) => setDocumentTitle(e.target.value)}
+                                value={meetingTitle}
+                                onChange={(e) => setMeetingTitle(e.target.value)}
                                 InputLabelProps={{
                                     style: { color: '#fff' },
                                 }}
@@ -135,12 +130,12 @@ const Sharedoc = () => {
                                 }}
                             />
                             <TextField
-                                label="Document Description"
+                                label="Meeting Description"
                                 variant="outlined"
                                 fullWidth
                                 margin="normal"
-                                value={documentDescription}
-                                onChange={(e) => setDocumentDescription(e.target.value)}
+                                value={meetingDescription}
+                                onChange={(e) => setMeetingDescription(e.target.value)}
                                 multiline
                                 rows={4}
                                 InputLabelProps={{
@@ -150,21 +145,54 @@ const Sharedoc = () => {
                                     style: { color: '#fff' },
                                 }}
                             />
-                            <input
-                                accept="*"
-                                style={{ display: 'none' }}
-                                id="raised-button-file"
-                                type="file"
-                                onChange={handleFileChange}
+                            <TextField
+                                label="Project ID"
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                                value={projectId}
+                                onChange={(e) => setProjectId(e.target.value)}
+                                InputLabelProps={{
+                                    style: { color: '#fff' },
+                                }}
+                                InputProps={{
+                                    style: { color: '#fff' },
+                                }}
                             />
-                            <label htmlFor="raised-button-file">
-                                <Button variant="contained" color="primary" component="span" style={{ marginTop: '20px' }}>
-                                    Choose File
-                                </Button>
-                            </label>
-                            {documentFile && <Typography variant="body2" style={{ color: '#fff', marginTop: '10px' }}>{documentFile.name}</Typography>}
-                            <Button variant="contained" color="primary" onClick={handleShare} style={{ marginTop: '20px' }}>
-                                Share Document
+                            <TextField
+                                label="Meeting Date"
+                                type="date"
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                                value={meetingDate}
+                                onChange={(e) => setMeetingDate(e.target.value)}
+                                InputLabelProps={{
+                                    shrink: true,
+                                    style: { color: '#fff' },
+                                }}
+                                InputProps={{
+                                    style: { color: '#fff' },
+                                }}
+                            />
+                            <TextField
+                                label="Meeting Time"
+                                type="time"
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                                value={meetingTime}
+                                onChange={(e) => setMeetingTime(e.target.value)}
+                                InputLabelProps={{
+                                    shrink: true,
+                                    style: { color: '#fff' },
+                                }}
+                                InputProps={{
+                                    style: { color: '#fff' },
+                                }}
+                            />
+                            <Button variant="contained" color="primary" onClick={handleSchedule} style={{ marginTop: '20px' }}>
+                                Schedule Meeting
                             </Button>
                         </>
                     )}
@@ -174,4 +202,4 @@ const Sharedoc = () => {
     );
 };
 
-export default Sharedoc;
+export default Schedulemeeting;

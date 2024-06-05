@@ -11,14 +11,14 @@ import AssignMember from './Components/AssignMember';
 import ScrumBoard from "./Components/ScrumBoard";
 import SprintPlanning from "./Components/SprintPlanning";
 import SprintsDisplay from "./Components/SprintsDisplay";
-import Createcalender from "./Components/W_Components/Createcalender";
-import Createmeeting from "./Components/W_Components/Createmeeting";
-import Schedulemeeting from "./Components/W_Components/Schedulemeeting";
-import Selectmembers_docsharing from "./Components/W_Components/Selectmembers_docsharing";
-import selectmembers_reminders from "./Components/W_Components/Selectmembers_reminders";
-import setreminder from "./Components/W_Components/Setreminder";
-import Sharedoc from "./Components/W_Components/Sharedoc";
-import Sharemeeting from "./Components/W_Components/Sharemeeting";
+import Createcalender from "./Components/Createcalender";
+import Createmeeting from "./Components/Createmeeting";
+import Schedulemeeting from "./Components/Schedulemeeting";
+import Selectmembers_docsharing from "./Components/Selectmembers_docsharing";
+import selectmembers_reminders from "./Components/Selectmembers_reminders";
+import setreminder from "./Components/Setreminder";
+import Sharedoc from "./Components/Sharedoc";
+import Sharemeeting from "./Components/Sharemeeting";
 
 function App() {
     return (

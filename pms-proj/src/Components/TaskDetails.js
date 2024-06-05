@@ -70,6 +70,7 @@ const SectionBox = styled(Box)(({ theme }) => ({
 const AddTaskButton = styled(Button)(({ theme }) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
+    width: '100%',
 }));
 
 const TaskManager = () => {
@@ -211,24 +212,24 @@ const TaskManager = () => {
                                         </Grid>
                                         <Typography variant="body1">Priority: {task.priority}</Typography>
                                         <Typography variant="body1">Status: {task.status}</Typography>
-                                        <Button
+                                        <AddTaskButton
                                             variant="contained"
                                             color="primary"
-                                            style={{ marginTop: '10px', backgroundColor: task.status === 'done' ? 'grey' : 'primary' }}
+                                            style={{ marginTop: '1px', backgroundColor: task.status === 'done' ? 'grey' : 'primary' }}
                                             onClick={() => markAsDone(task.taskId)}
                                             disabled={task.status === 'Done'}
                                         >
                                             Mark as Done
-                                        </Button>
-                                        <Button
+                                        </AddTaskButton>
+                                        <AddTaskButton
                                             variant="contained"
                                             color="primary"
-                                            style={{ marginTop: '10px', marginLeft: '2px' }}
+                                            style={{ marginTop: '1px', marginLeft: '2px' }}
                                             onClick={() => assignMember(task.taskId)}
                                             disabled={task.status === 'Done'}
                                         >
                                             Assign Member
-                                        </Button>
+                                        </AddTaskButton>
                                     </SectionBox>
                                 ))
                             ) : (
@@ -241,7 +242,7 @@ const TaskManager = () => {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                style={{ marginTop: '20px' }}
+                                style={{ marginTop: '20px', width: '100%'}}
                                 onClick={addTask}
                             >
                                 Create New Task
