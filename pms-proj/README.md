@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# Project Management System (PMS)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Project Management System](https://s10.gifyu.com/images/SYmtP.gif)
 
-## Available Scripts
+## Introduction
+This Project Management System (PMS) helps teams efficiently manage projects and tasks. Users can create projects, assign tasks, and track progress through a user-friendly interface.
 
-In the project directory, you can run:
+## Features
+- **Project Management**: Create, update, and delete projects.
+- **Task Management**: Assign tasks to projects, set priorities, and mark tasks as done.
+- **User Management**: Assign members to tasks and projects.
+- **Real-time Updates**: View and update the status of tasks and projects in real-time.
 
-### `npm start`
+## Technologies Used
+- **Frontend**: React, Material-UI
+- **Backend**: Spring Boot
+- **Database**: MySQL
+- **Build Tools**: Maven
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Installation
+### Prerequisites
+- Node.js
+- Java 11 or higher
+- MySQL
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Setup
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/AsharAmir/pms-proj.git
+    cd pms-proj
+    ```
 
-### `npm test`
+2. Configure MySQL Database:
+    - Create a database named `pms`.
+    - Update `src/main/resources/application.properties` with your database credentials.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+3. Start the frontend server:
+    ```bash
+    npm start
+    ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. Build and run the backend:
+    ```bash
+    cd ../backend
+    mvn clean install
+    mvn spring-boot:run
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## API Endpoints
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Projects
+- `GET /api/projects/fetchAll`: Fetch all projects
+- `POST /api/projects/create`: Create a new project
+- `PUT /api/projects/update/{projectId}`: Update a project by ID
+- `DELETE /api/projects/delete/{projectId}`: Delete a project by ID
 
-### `npm run eject`
+### Tasks
+- `GET /api/tasks/GetByProject/{projectId}`: Fetch tasks by project ID
+- `POST /api/tasks/create`: Create a new task
+- `PUT /api/tasks/update/{taskId}`: Update a task by ID
+- `DELETE /api/tasks/delete/{taskId}`: Delete a task by ID
+- `POST /api/tasks/MarkAsDone/{taskId}`: Mark task as done
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Members
+- `GET /api/member/getMembersByProject/{projectId}`: Fetch members by project ID
+- `GET /api/member/getMembersByTask/{taskId}`: Fetch members by task ID
+- `POST /api/member/assignToProject`: Assign a member to a project
+- `POST /api/member/assignToTask`: Assign a member to a task
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
+1. Start both frontend and backend servers.
+2. Open your browser and navigate to `http://localhost:3000`.
+3. Use the interface to create projects, assign tasks, and manage your project workflow.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Contributing
+Feel free to contribute to this project by creating pull requests, submitting issues, or improving the documentation.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Contact
+For any questions or suggestions, please contact Ashar Amir at ashaar.x@outlook.com
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Enjoy managing your projects with our PMS!
