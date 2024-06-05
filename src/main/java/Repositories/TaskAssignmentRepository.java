@@ -7,4 +7,5 @@ import java.util.List;
 
 @Repository
 public interface TaskAssignmentRepository extends JpaRepository<TaskAssignment, Integer> {
+    List<TaskAssignment> findByMemberId(int memberId);
 }

@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import Factories.ConcreteTaskFactory;
+import Service.CheckMemberAvailabilityService;
+
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -15,6 +17,9 @@ public class TaskController {
 
     @Autowired
     private ConcreteTaskFactory taskFactory;
+
+    @Autowired
+    private CheckMemberAvailabilityService checkMemberAvailabilityService;
 
 @PostMapping("/addTask")
 public ResponseEntity<String> createTask(@RequestBody Task task) {
@@ -89,5 +94,15 @@ public ResponseEntity<String> createTask(@RequestBody Task task) {
         task.setStatus(status);
         taskRepository.save(task);
         return ResponseEntity.ok("Task status updated");
+    }
+
+    @GetMapping("/isMemberAvailable/{memberId}")
+    public ResponseEntity<String> isMemberAvailable(@PathVariable int memberId) {
+        boolean isAvailable = checkMemberAvailabilityService.isMemberAvailable(memberId);
+        if (isAvailable) {
+            return ResponseEntity.ok("Member is available");
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Member is assigned to a task");
+        }
     }
 }
