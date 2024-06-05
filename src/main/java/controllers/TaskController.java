@@ -105,4 +105,14 @@ public ResponseEntity<String> createTask(@RequestBody Task task) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Member is assigned to a task");
         }
     }
+
+    @DeleteMapping("/deleteTask/{id}")
+    public ResponseEntity<String> deleteTask(@PathVariable int id) {
+        Task task = taskRepository.findById(id).orElse(null);
+        if (task == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found");
+        }
+        taskRepository.delete(task);
+        return ResponseEntity.ok("Task deleted successfully");
+    }
 }

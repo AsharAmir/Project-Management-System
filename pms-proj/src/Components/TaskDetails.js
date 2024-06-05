@@ -105,6 +105,16 @@ const TaskManager = () => {
         }
     };
 
+    const DeleteButton = styled(Button)(({ theme }) => ({
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        width: '100%',
+        backgroundColor: 'rgba(155,40,31,0.85)', // Red color
+        '&:hover': {
+            backgroundColor: 'rgba(189,52,52,0.8)', // Darker red on hover
+        },
+    }));
+
     const handleProjectChange = (event) => {
         const projectId = event.target.value;
         setSelectedProject(projectId);
@@ -131,6 +141,21 @@ const TaskManager = () => {
             setLoading(false);
         }
     };
+
+
+    const deleteTask = async (taskId) => {
+        try {
+            const response = await axios.delete(`http://localhost:3000/api/tasks/deleteTask/${taskId}`);
+            if (response.status !== 200) {
+                throw new Error(`Error deleting task: ${response.statusText}`);
+            }
+            // If deletion is successful, refetch tasks
+            fetchTasks(selectedProject);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
 
     const markAsDone = async (taskId) => {
         try {
@@ -230,6 +255,14 @@ const TaskManager = () => {
                                         >
                                             Assign Member
                                         </AddTaskButton>
+                                        <DeleteButton
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => deleteTask(task.taskId)}
+                                            disabled={task.status === 'Done'}
+                                        >
+                                            Delete Task
+                                        </DeleteButton>
                                     </SectionBox>
                                 ))
                             ) : (
