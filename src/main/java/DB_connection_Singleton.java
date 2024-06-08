@@ -5,9 +5,9 @@ import java.sql.SQLException;
 public class DB_connection_Singleton{
     private static DB_connection_Singleton instance;
     private Connection connection;
-    private String url = "jdbc:mysql://localhost:3306/sda_db";
-    private String username = "root";
-    private String password = "bday@18092003";
+    private String url = "jdbc:mysql://localhost:PORT/DBNAME";
+    private String username = "USERNAME";
+    private String password = "PASSWORD";
 
     private DB_connection_Singleton() throws SQLException {
         try {
